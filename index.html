@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyOrder | Delivery sem taxas para restaurantes</title>
+  <meta name="description"
+    content="EasyOrder sistema de delivery com taxa zero por pedido, rastreio em tempo real, app para entregadores, KDS e checkout Pix por apenas R$ 97/mês." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#ef4444',
+              dark: '#09090b',
+              panel: '#18181b',
+              soft: '#27272a',
+              line: '#3f3f46'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(239,68,68,.22), 0 0 24px rgba(239,68,68,.20)',
+            softxl: '0 20px 80px rgba(0,0,0,.45)'
+          },
+          animation: {
+            floaty: 'floaty 3s ease-in-out infinite',
+            pulseGlow: 'pulseGlow 1.8s ease-in-out infinite',
+            shine: 'shine 3s linear infinite',
+            fadeUp: 'fadeUp .8s ease forwards'
+          },
+          keyframes: {
+            floaty: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(239,68,68,.55)' },
+              '50%': { transform: 'scale(1.03)', boxShadow: '0 0 0 16px rgba(239,68,68,0)' }
+            },
+            shine: {
+              '0%': { transform: 'translateX(-140%) skewX(-18deg)' },
+              '100%': { transform: 'translateX(220%) skewX(-18deg)' }
+            },
+            fadeUp: {
+              'from': { opacity: '0', transform: 'translateY(18px)' },
+              'to': { opacity: '1', transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #09090b;
+    }
+
+    .hero-noise::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .07;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(239, 68, 68, .28), transparent 20%),
+        radial-gradient(circle at 80% 10%, rgba(239, 68, 68, .18), transparent 20%),
+        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, .08), transparent 22%),
+        radial-gradient(circle at 10% 80%, rgba(255, 255, 255, .05), transparent 18%);
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+  </style>
+</head>
+
+<body class="text-zinc-100 antialiased">
+  <header class="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/85 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <a href="#" class="flex items-center gap-3">
+        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-red-500/15 text-red-500 shadow-glow">
+          <i class="fa-solid fa-bolt text-lg"></i>
+        </div>
+        <div>
+
+          <p class="text-base font-extrabold text-white">EasyOrder</p>
+        </div>
+      </a>
+
+      <nav class="hidden items-center gap-8 text-sm text-zinc-300 md:flex">
+        <a href="#comparativo" class="transition hover:text-white">Comparativo</a>
+        <a href="#funcionalidades" class="transition hover:text-white">Funcionalidades</a>
+        <a href="#calculadora" class="transition hover:text-white">Calculadora</a>
+        <a href="#preco" class="transition hover:text-white">Preço</a>
+        <a href="#faq" class="transition hover:text-white">FAQ</a>
+      </nav>
+
+      <a id="top-whatsapp" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20EasyOrder"
+        target="_blank" rel="noopener noreferrer"
+        class="hidden rounded-full border border-red-500/30 bg-red-500 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-red-400 md:inline-flex">
+        Falar no WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-noise grid-bg relative overflow-hidden">
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
+      <div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:py-24">
+        <div class="relative z-10 animate-fadeUp">
+          <div
+            class="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-300">
+            <span class="inline-flex h-2.5 w-2.5 rounded-full bg-red-500"></span>
+            Pare de entregar seu lucro para marketplace
+          </div>
+
+          <h1 class="max-w-4xl text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+            Seu restaurante vende.
+            <span class="text-red-500">Os apps ficam com até 27%.</span>
+            O EasyOrder devolve o lucro e o controle para você.
+          </h1>
+
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-zinc-300 sm:text-xl">
+            Tenha seu próprio sistema de delivery com <strong class="text-white">taxa zero por pedido</strong>, rastreio
+            em tempo real, app exclusivo para entregadores, painel de cozinha e checkout via Pix.
+            Tudo isso por apenas <strong class="text-white">R$ 97/mês</strong>.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <a id="hero-whatsapp"
+              href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20ver%20uma%20demo%20do%20EasyOrder"
+              target="_blank" rel="noopener noreferrer"
+              class="group relative inline-flex animate-pulseGlow items-center justify-center overflow-hidden rounded-full bg-red-500 px-7 py-4 text-base font-extrabold text-white shadow-glow transition hover:-translate-y-1 hover:bg-red-400">
+              <span class="absolute inset-y-0 left-0 w-16 bg-white/20 blur-md animate-shine"></span>
+              <span class="relative z-10 flex items-center gap-3">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                Quero vender sem taxas
+              </span>
+            </a>
+            <a href="#calculadora"
+              class="inline-flex items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 px-7 py-4 text-base font-bold text-zinc-100 transition hover:border-zinc-500 hover:bg-zinc-800">
+              Simular economia
+            </a>
+          </div>
+
+          <div class="mt-10 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4">
+              <p class="text-2xl font-black text-white">R$ 97</p>
+              <p class="mt-1 text-sm text-zinc-400">mensalidade fixa</p>
+            </div>
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4">
+              <p class="text-2xl font-black text-white">0%</p>
+              <p class="mt-1 text-sm text-zinc-400">de taxa por pedido</p>
+            </div>
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4">
+              <p class="text-2xl font-black text-white">100%</p>
+              <p class="mt-1 text-sm text-zinc-400">do lucro fica no caixa</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative z-10 animate-fadeUp lg:pl-8">
+          <div
+            class="animate-floaty rounded-[28px] border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 p-5 shadow-softxl">
+            <div class="rounded-[24px] border border-zinc-800 bg-zinc-950 p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.25em] text-zinc-500">Visão operacional</p>
+                  <h2 class="mt-2 text-2xl font-extrabold text-white">EasyOrder em ação</h2>
+                </div>
+                <div
+                  class="rounded-2xl border border-red-500/20 bg-red-500/10 px-3 py-2 text-sm font-bold text-red-300">
+                  ao vivo
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-4">
+                <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <p class="text-sm font-semibold text-zinc-400">Pedido recebido</p>
+                      <p class="mt-1 font-bold text-white">#1942 — 2 hambúrgueres + refrigerante</p>
+                    </div>
+                    <span class="rounded-full bg-amber-500/15 px-3 py-1 text-xs font-bold text-amber-300">KDS</span>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <p class="text-sm font-semibold text-zinc-400">Entregador em rota</p>
+                      <p class="mt-1 font-bold text-white">GPS com rastreio em tempo real</p>
+                    </div>
+                    <span
+                      class="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-300">Live</span>
+                  </div>
+                  <div
+                    class="mt-4 h-28 rounded-2xl border border-zinc-800 bg-[radial-gradient(circle_at_20%_30%,rgba(239,68,68,.20),transparent_18%),linear-gradient(180deg,#18181b,#0f0f12)] p-4">
+                    <div class="relative h-full rounded-xl border border-dashed border-zinc-700">
+                      <div
+                        class="absolute left-[18%] top-[56%] h-3 w-3 rounded-full bg-red-500 shadow-[0_0_20px_rgba(239,68,68,.75)]">
+                      </div>
+                      <div
+                        class="absolute left-[22%] top-[47%] h-[2px] w-[42%] rotate-[-9deg] bg-gradient-to-r from-red-500 to-transparent">
+                      </div>
+                      <div
+                        class="absolute right-[16%] top-[38%] h-5 w-5 rounded-full border-4 border-white bg-zinc-950">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+                    <p class="text-sm font-semibold text-zinc-400">Pagamento</p>
+                    <p class="mt-2 text-lg font-extrabold text-white">Pix automático</p>
+                  </div>
+                  <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+                    <p class="text-sm font-semibold text-zinc-400">Taxa por pedido</p>
+                    <p class="mt-2 text-lg font-extrabold text-red-400">R$ 0,00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-y border-zinc-800 bg-zinc-950/70">
+      <div class="mx-auto grid max-w-7xl gap-5 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <p class="text-sm text-zinc-400">Modelo antigo</p>
+          <p class="mt-2 text-3xl font-black text-red-400">27%</p>
+          <p class="mt-1 text-sm text-zinc-300">é o que muitos restaurantes entregam em taxa.</p>
+        </div>
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <p class="text-sm text-zinc-400">Com EasyOrder</p>
+          <p class="mt-2 text-3xl font-black text-white">0%</p>
+          <p class="mt-1 text-sm text-zinc-300">por pedido no seu delivery próprio.</p>
+        </div>
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <p class="text-sm text-zinc-400">Operação</p>
+          <p class="mt-2 text-3xl font-black text-white">GPS + KDS</p>
+          <p class="mt-1 text-sm text-zinc-300">do pedido à entrega sem improviso.</p>
+        </div>
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <p class="text-sm text-zinc-400">Implantação</p>
+          <p class="mt-2 text-3xl font-black text-white">rápida</p>
+          <p class="mt-1 text-sm text-zinc-300">para começar a vender com sua marca.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="comparativo" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-400">Prova comparativa</p>
+        <h2 class="mt-3 text-3xl font-black text-white sm:text-4xl">O problema não é vender. É <span
+            class="text-red-500">o quanto você perde</span> cada vez que vende.</h2>
+        <p class="mt-4 text-lg text-zinc-300">Compare a lógica dos apps tradicionais com a estrutura do EasyOrder. A
+          diferença no fim do mês pode pagar equipe, estoque e crescimento.</p>
+      </div>
+
+      <div class="mt-10 overflow-hidden rounded-[28px] border border-zinc-800 bg-zinc-900/70 shadow-softxl">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-sm">
+            <thead class="bg-zinc-950/90 text-zinc-200">
+              <tr>
+                <th class="px-6 py-5 text-sm font-bold uppercase tracking-wide text-zinc-400">Critério</th>
+                <th class="px-6 py-5 text-sm font-bold uppercase tracking-wide text-red-300">Apps Tradicionais</th>
+                <th class="px-6 py-5 text-sm font-bold uppercase tracking-wide text-emerald-300">EasyOrder</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-800 text-base">
+              <tr>
+                <td class="px-6 py-5 font-semibold text-white">Taxa por pedido</td>
+                <td class="px-6 py-5 text-red-300">Até 27% em cima de cada venda</td>
+                <td class="px-6 py-5 text-emerald-300">R$ 0,00 por pedido</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-white">Lucro do restaurante</td>
+                <td class="px-6 py-5 text-zinc-300">Dilui a margem a cada novo pedido</td>
+                <td class="px-6 py-5 text-emerald-300">100% do pedido fica com o restaurante</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-white">Canal de vendas</td>
+                <td class="px-6 py-5 text-zinc-300">Dependência de marketplace</td>
+                <td class="px-6 py-5 text-white">Canal próprio com sua marca</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-white">Rastreio</td>
+                <td class="px-6 py-5 text-zinc-300">Nem sempre sob seu controle</td>
+                <td class="px-6 py-5 text-white">Tempo real via GPS</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-white">Operação</td>
+                <td class="px-6 py-5 text-zinc-300">Fluxo limitado ao app terceiro</td>
+                <td class="px-6 py-5 text-white">App do entregador + KDS + Pix automático</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-5 font-semibold text-white">Custo fixo</td>
+                <td class="px-6 py-5 text-zinc-300">Variável e crescente conforme vende mais</td>
+                <td class="px-6 py-5 text-emerald-300">R$ 97,00 por mês</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="funcionalidades" class="bg-zinc-950/70 py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-400">Grid de funcionalidades</p>
+          <h2 class="mt-3 text-3xl font-black text-white sm:text-4xl">Tudo que você precisa para operar como app grande,
+            <span class="text-red-500">sem pagar como app grande</span>.
+          </h2>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <article
+            class="rounded-[28px] border border-zinc-800 bg-zinc-900 p-6 transition hover:-translate-y-1 hover:border-red-500/40 hover:shadow-glow">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/12 text-2xl text-red-400">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <h3 class="mt-5 text-xl font-extrabold text-white">Rastreio em tempo real</h3>
+            <p class="mt-3 leading-7 text-zinc-300">Cliente acompanha o pedido em rota via GPS, no estilo dos grandes
+              apps. Mais transparência e menos ansiedade.</p>
+          </article>
+
+          <article
+            class="rounded-[28px] border border-zinc-800 bg-zinc-900 p-6 transition hover:-translate-y-1 hover:border-red-500/40 hover:shadow-glow">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/12 text-2xl text-red-400">
+              <i class="fa-solid fa-kitchen-set"></i>
+            </div>
+            <h3 class="mt-5 text-xl font-extrabold text-white">Painel KDS</h3>
+            <p class="mt-3 leading-7 text-zinc-300">Organize a cozinha com visual claro dos pedidos entrando em tempo
+              real. Menos erro, mais agilidade e produção fluida.</p>
+          </article>
+
+          <article
+            class="rounded-[28px] border border-zinc-800 bg-zinc-900 p-6 transition hover:-translate-y-1 hover:border-red-500/40 hover:shadow-glow">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/12 text-2xl text-red-400">
+              <i class="fa-solid fa-motorcycle"></i>
+            </div>
+            <h3 class="mt-5 text-xl font-extrabold text-white">App de entregador</h3>
+            <p class="mt-3 leading-7 text-zinc-300">Entregadores recebem corridas, atualizam status e seguem o fluxo da
+              operação sem depender de improviso por WhatsApp.</p>
+          </article>
+
+          <article
+            class="rounded-[28px] border border-zinc-800 bg-zinc-900 p-6 transition hover:-translate-y-1 hover:border-red-500/40 hover:shadow-glow">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/12 text-2xl text-red-400">
+              <i class="fa-solid fa-qrcode"></i>
+            </div>
+            <h3 class="mt-5 text-xl font-extrabold text-white">Checkout automático via Pix</h3>
+            <p class="mt-3 leading-7 text-zinc-300">Venda com mais velocidade e reduza atrito no fechamento do pedido
+              com pagamento simples e automatizado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculadora" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-400">Calculadora de perda</p>
+          <h2 class="mt-3 text-3xl font-black text-white sm:text-4xl">Descubra em segundos quanto o seu delivery pode
+            estar deixando na mesa.</h2>
+          <p class="mt-4 text-lg text-zinc-300">Digite o faturamento mensal do seu delivery. A calculadora compara a
+            lógica de uma taxa de 27% com o modelo fixo do EasyOrder.</p>
+        </div>
+
+        <div class="rounded-[30px] border border-zinc-800 bg-zinc-900 p-6 shadow-softxl sm:p-8">
+          <label for="faturamento" class="text-sm font-bold uppercase tracking-wide text-zinc-400">Quanto você vende por
+            mês no delivery?</label>
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+            <div class="relative flex-1">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400">R$</span>
+              <input id="faturamento" type="text" inputmode="numeric" placeholder="Ex: 30000"
+                class="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-12 py-4 text-lg font-bold text-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" />
+            </div>
+            <button id="btnCalcular"
+              class="rounded-2xl bg-red-500 px-6 py-4 font-extrabold text-white transition hover:bg-red-400">Calcular
+              agora</button>
+          </div>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+              <p class="text-sm text-zinc-400">Perda em taxas</p>
+              <p id="resultadoTaxa" class="mt-2 text-2xl font-black text-red-400">R$ 0,00</p>
+            </div>
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+              <p class="text-sm text-zinc-400">Custo EasyOrder</p>
+              <p id="resultadoPlano" class="mt-2 text-2xl font-black text-white">R$ 97,00</p>
+            </div>
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+              <p class="text-sm text-zinc-400">Economia estimada</p>
+              <p id="resultadoEconomia" class="mt-2 text-2xl font-black text-emerald-300">R$ 0,00</p>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5 text-emerald-200">
+            <p id="resultadoTexto" class="text-sm leading-7 sm:text-base">Exemplo: se você vende R$ 30.000 por mês, pode
+              perder R$ 8.100 em taxas. Com EasyOrder, paga apenas R$ 97 no mês.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="preco" class="bg-zinc-950/70 py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-400">Preço simples</p>
+          <h2 class="mt-3 text-3xl font-black text-white sm:text-4xl">Um preço que faz sentido para vender mais e <span
+              class="text-red-500">reter mais lucro</span>.</h2>
+        </div>
+
+        <div class="mx-auto mt-10 max-w-2xl">
+          <div
+            class="relative overflow-hidden rounded-[32px] border border-red-500/30 bg-gradient-to-b from-zinc-900 to-zinc-950 p-8 shadow-glow sm:p-10">
+            <div
+              class="absolute right-4 top-4 rounded-full bg-red-500 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-white">
+              Oferta principal</div>
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-300">EasyOrder</p>
+            <div class="mt-4 flex items-end justify-center gap-3">
+              <span class="text-5xl font-black text-white sm:text-6xl">R$ 97</span>
+              <span class="pb-2 text-lg font-semibold text-zinc-400">/mês</span>
+            </div>
+            <p class="mt-4 text-center text-lg text-zinc-300">Sem taxa por pedido. Sem punir seu crescimento. Sem
+              entregar sua margem para terceiros.</p>
+
+            <ul class="mt-8 space-y-4 text-zinc-200">
+              <li class="flex items-start gap-3"><i
+                  class="fa-solid fa-circle-check mt-1 text-emerald-400"></i><span>Taxa zero por pedido</span></li>
+              <li class="flex items-start gap-3"><i
+                  class="fa-solid fa-circle-check mt-1 text-emerald-400"></i><span>Rastreio em tempo real via GPS</span>
+              </li>
+              <li class="flex items-start gap-3"><i class="fa-solid fa-circle-check mt-1 text-emerald-400"></i><span>App
+                  exclusivo para entregadores</span></li>
+              <li class="flex items-start gap-3"><i
+                  class="fa-solid fa-circle-check mt-1 text-emerald-400"></i><span>Painel KDS para cozinha</span></li>
+              <li class="flex items-start gap-3"><i
+                  class="fa-solid fa-circle-check mt-1 text-emerald-400"></i><span>Checkout automático via Pix</span>
+              </li>
+            </ul>
+
+            <a id="price-whatsapp" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20assinar%20o%20EasyOrder"
+              target="_blank" rel="noopener noreferrer"
+              class="mt-8 inline-flex w-full items-center justify-center rounded-full bg-red-500 px-6 py-4 text-base font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-red-400">
+              <i class="fa-brands fa-whatsapp mr-3 text-lg"></i>
+              Quero ativar meu EasyOrder
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-400">FAQ</p>
+        <h2 class="mt-3 text-3xl font-black text-white sm:text-4xl">Dúvidas comuns antes de começar</h2>
+      </div>
+
+      <div class="mt-10 space-y-4" id="faqList">
+        <article class="faq-item rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <button class="faq-trigger flex w-full items-center justify-between gap-4 text-left">
+            <span class="text-lg font-bold text-white">O EasyOrder cobra taxa por pedido?</span>
+            <i class="fa-solid fa-plus text-red-400 transition"></i>
+          </button>
+          <div class="faq-content hidden pt-4 text-zinc-300">Não. O modelo do EasyOrder é de mensalidade fixa de R$
+            97,00. O valor dos pedidos fica com o restaurante.</div>
+        </article>
+
+        <article class="faq-item rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <button class="faq-trigger flex w-full items-center justify-between gap-4 text-left">
+            <span class="text-lg font-bold text-white">O cliente consegue acompanhar a entrega?</span>
+            <i class="fa-solid fa-plus text-red-400 transition"></i>
+          </button>
+          <div class="faq-content hidden pt-4 text-zinc-300">Sim. O sistema conta com rastreio em tempo real via GPS
+            para dar mais transparência durante a entrega.</div>
+        </article>
+
+        <article class="faq-item rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <button class="faq-trigger flex w-full items-center justify-between gap-4 text-left">
+            <span class="text-lg font-bold text-white">Tem app para entregadores?</span>
+            <i class="fa-solid fa-plus text-red-400 transition"></i>
+          </button>
+          <div class="faq-content hidden pt-4 text-zinc-300">Sim. O EasyOrder possui app exclusivo para entregadores,
+            centralizando corridas, status e rota da entrega.</div>
+        </article>
+
+        <article class="faq-item rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5">
+          <button class="faq-trigger flex w-full items-center justify-between gap-4 text-left">
+            <span class="text-lg font-bold text-white">O checkout aceita Pix?</span>
+            <i class="fa-solid fa-plus text-red-400 transition"></i>
+          </button>
+          <div class="faq-content hidden pt-4 text-zinc-300">Sim. O fluxo inclui checkout automático via Pix para
+            acelerar a conclusão do pedido.</div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800 bg-zinc-950">
+    <div
+      class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 text-sm text-zinc-400 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <div>
+        <p class="font-bold text-white">H7 partners</p>
+        <p class="mt-1">EasyOrder • Araraquara/SP</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="#comparativo" class="transition hover:text-white">Comparativo</a>
+        <a href="#calculadora" class="transition hover:text-white">Calculadora</a>
+        <a href="#preco" class="transition hover:text-white">Preço</a>
+        <a href="#faq" class="transition hover:text-white">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+      (function () {
+        const monthlyFee = 97;
+        const rate = 0.27;
+        const input = document.getElementById('faturamento');
+        const btn = document.getElementById('btnCalcular');
+        const resultTax = document.getElementById('resultadoTaxa');
+        const resultPlan = document.getElementById('resultadoPlano');
+        const resultSave = document.getElementById('resultadoEconomia');
+        const resultText = document.getElementById('resultadoTexto');
+
+        function formatCurrency(value) {
+          return value.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          });
+        }
+
+        function sanitizeNumber(value) {
+          return Number(String(value).replace(/\D/g, '')) || 0;
+        }
+
+        function calculate() {
+          const revenue = sanitizeNumber(input.value);
+          const lost = revenue * rate;
+          const saved = Math.max(lost - monthlyFee, 0);
+
+          resultTax.textContent = formatCurrency(lost);
+          resultPlan.textContent = formatCurrency(monthlyFee);
+          resultSave.textContent = formatCurrency(saved);
+
+          if (!revenue) {
+            resultText.textContent = 'Exemplo: se você vende R$ 30.000 por mês, pode perder R$ 8.100 em taxas. Com EasyOrder, paga apenas R$ 97 no mês.';
+            return;
+          }
+
+          resultText.textContent = `Se o seu delivery vende ${formatCurrency(revenue)} por mês, um app com taxa de 27% pode levar ${formatCurrency(lost)}. Com o EasyOrder, seu custo fixo é ${formatCurrency(monthlyFee)} e a economia estimada fica em ${formatCurrency(saved)}.`;
+        }
+
+        input.addEventListener('input', function () {
+          const raw = sanitizeNumber(this.value);
+          this.value = raw ? raw.toLocaleString('pt-BR') : '';
+        });
+
+        btn.addEventListener('click', calculate);
+        input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') calculate();
+        });
+        calculate();
+      })();
+
+    (function () {
+      const items = document.querySelectorAll('.faq-item');
+      items.forEach((item) => {
+        const trigger = item.querySelector('.faq-trigger');
+        const content = item.querySelector('.faq-content');
+        const icon = item.querySelector('i');
+
+        trigger.addEventListener('click', () => {
+          const isOpen = !content.classList.contains('hidden');
+          items.forEach((otherItem) => {
+            otherItem.querySelector('.faq-content').classList.add('hidden');
+            otherItem.querySelector('i').classList.remove('fa-minus');
+            otherItem.querySelector('i').classList.add('fa-plus');
+          });
+
+          if (!isOpen) {
+            content.classList.remove('hidden');
+            icon.classList.remove('fa-plus');
+            icon.classList.add('fa-minus');
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>
